@@ -1,7 +1,8 @@
+add_subdirectory(common)
+
 #
 # libdisasm
 #
-
 set(DisasmSources
     third_party/libdisasm/ia32_implicit.c
     third_party/libdisasm/ia32_insn.c
@@ -153,6 +154,7 @@ find_library(BREAKPAD_PROCESSOR_RELEASE processor_bits
 target_link_libraries(minidump_stackwalk
 	processor
 	disasm
-	debug ${BREAKPAD_COMMON_DEBUG}
-	optimized ${BREAKPAD_COMMON_RELEASE}
+    common
+	#debug ${BREAKPAD_COMMON_DEBUG}
+	#optimized ${BREAKPAD_COMMON_RELEASE}
 )
