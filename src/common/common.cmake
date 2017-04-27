@@ -50,7 +50,7 @@ list(APPEND CommonSources
     # language.h
 )
 
-if(UNIX)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     list(APPEND CommonSources
         common/linux/crc32.cc
         common/linux/crc32.h
@@ -215,7 +215,7 @@ list(APPEND CommonTestsSources
 #     dwarf_line_to_module_unittest.cc
 )
 
-if(UNIX)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 	list(APPEND CommonTestsSources
 		common/linux/dump_symbols_unittest.cc
 		common/linux/elf_core_dump_unittest.cc

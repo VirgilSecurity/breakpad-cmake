@@ -7,7 +7,11 @@ message(STATUS "CMAKE_SYSTEM_NAME: " ${CMAKE_SYSTEM_NAME})
 #
 # Download GMock and GTest
 #
-find_package(Git REQUIRED)
+if(CMAKE_CROSSCOMPILING)
+	find_host_package(Git REQUIRED)
+else()
+	find_package(Git REQUIRED)
+endif()
 
 if(NOT EXISTS ${CMAKE_SOURCE_DIR}/src/testing)
 	execute_process(

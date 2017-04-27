@@ -62,6 +62,7 @@ target_compile_definitions(processor PRIVATE
 
 target_compile_options(processor PRIVATE
 	$<$<CXX_COMPILER_ID:MSVC>:/wd4800 /wd4146>
+    $<$<COMPILE_LANGUAGE:CXX>:-std=c++14>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
@@ -92,6 +93,7 @@ target_compile_definitions(minidump_stackwalk PRIVATE
 
 target_compile_options(minidump_stackwalk PRIVATE
 	$<$<CXX_COMPILER_ID:MSVC>:/wd4800 /wd4146>
+    $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CXX_COMPILER_ID:GNU>>:-std=c++11>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
