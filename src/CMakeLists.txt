@@ -1,5 +1,6 @@
 if(MSVC)
 	include(client/windows/crash_generation/crash_generation.cmake)
+	include(client/windows/handler/exception_handler.cmake)
 endif()
 
 include(common/common.cmake)
