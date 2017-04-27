@@ -103,3 +103,61 @@ target_link_libraries(minidump_stackwalk
 	disasm
     common
 )
+
+#
+# processor_unittests
+#
+#add_executable(processor_unittests
+#	processor/address_map_unittest.cc
+#	processor/basic_source_line_resolver_unittest.cc
+#	processor/cfi_frame_info_unittest.cc
+#	processor/contained_range_map_unittest.cc
+#	#processor/disassembler_x86_unittest.cc FIXME: platform?
+#	#processor/exploitability_unittest.cc FIXME: platform?
+#	processor/fast_source_line_resolver_unittest.cc
+#	processor/map_serializers_unittest.cc
+#	processor/microdump_processor_unittest.cc
+#	processor/minidump_processor_unittest.cc
+#	processor/minidump_unittest.cc
+#	processor/pathname_stripper_unittest.cc
+#	processor/postfix_evaluator_unittest.cc
+#	processor/range_map_shrink_down_unittest.cc
+#	processor/range_map_unittest.cc
+#	processor/stackwalker_address_list_unittest.cc
+#	processor/stackwalker_amd64_unittest.cc
+#	processor/stackwalker_arm64_unittest.cc
+#	processor/stackwalker_arm_unittest.cc
+#	processor/stackwalker_mips_unittest.cc
+#	processor/stackwalker_mips64_unittest.cc
+#	processor/stackwalker_unittest_utils.h
+#	processor/stackwalker_x86_unittest.cc
+#	processor/static_address_map_unittest.cc
+#	processor/static_contained_range_map_unittest.cc
+#	processor/static_map_unittest.cc
+#	processor/static_range_map_unittest.cc
+#	processor/synth_minidump_unittest.cc
+#	processor/synth_minidump_unittest_data.h
+#)
+#
+#target_include_directories(processor_unittests PRIVATE
+#	${CMAKE_SOURCE_DIR}/src
+#)
+#
+#target_compile_definitions(processor_unittests PRIVATE
+#	$<$<CXX_COMPILER_ID:MSVC>:UNICODE _CRT_SECURE_NO_WARNINGS _SCL_SECURE_NO_WARNINGS>
+#)
+#
+#target_compile_options(processor_unittests PRIVATE
+#	$<$<CXX_COMPILER_ID:MSVC>:/wd4800 /wd4146>
+#	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
+#	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
+#	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
+#	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
+#)
+#
+#target_link_libraries(processor_unittests
+#	processor
+#	disasm
+#	gmock
+#	gtest
+#)
