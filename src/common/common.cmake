@@ -156,6 +156,8 @@ list(APPEND CommonSources
     common/test_assembler.h
     common/unordered.h
     common/using_std_string.h
+
+	common/common.cmake
 )
 
 if(MSVC)
@@ -193,7 +195,6 @@ target_compile_definitions(common PUBLIC
     $<$<PLATFORM_ID:Darwin>:HAVE_MACH_O_NLIST_H>
     $<$<PLATFORM_ID:Linux>:HAVE_A_OUT_H>
 )
-
 
 #       'target_name': 'common_unittests
 #       'type': 'executable
