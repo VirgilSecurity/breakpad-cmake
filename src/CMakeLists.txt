@@ -3,6 +3,8 @@ if(MSVC)
 	include(client/windows/handler/exception_handler.cmake)
 	include(client/windows/sender/crash_report_sender.cmake)
 	include(client/windows/tests/crash_generation_app/crash_generation_app.cmake)
+	
+	include(tools/windows/tools_windows.cmake)
 endif()
 
 include(common/common.cmake)
