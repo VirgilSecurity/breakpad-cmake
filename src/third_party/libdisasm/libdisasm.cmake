@@ -13,6 +13,8 @@ set(DisasmSources
     third_party/libdisasm/x86_insn.c
     third_party/libdisasm/x86_misc.c
     third_party/libdisasm/x86_operand_list.c
+
+	third_party/libdisasm/libdisasm.cmake
 )
 source_group("" FILES ${DisasmSources})
 
