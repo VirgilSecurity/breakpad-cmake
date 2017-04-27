@@ -467,7 +467,7 @@ INT_PTR CALLBACK About(HWND dlg,
 
 int APIENTRY _tWinMain(HINSTANCE instance,
                        HINSTANCE previous_instance,
-                       LPTSTR command_line,
+                       char* command_line,
                        int command_show) {
   using namespace google_breakpad;
 
