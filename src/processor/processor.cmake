@@ -55,19 +55,23 @@ target_include_directories(processor PUBLIC
 )
 
 target_compile_definitions(processor PRIVATE
-	$<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS>
-	$<$<CXX_COMPILER_ID:MSVC>:_SCL_SECURE_NO_WARNINGS>
+	$<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS _SCL_SECURE_NO_WARNINGS>
 	BPLOG_MINIMUM_SEVERITY=SEVERITY_ERROR
 )
 
 target_compile_options(processor PRIVATE
 	$<$<CXX_COMPILER_ID:MSVC>:/wd4800 /wd4146>
-    $<$<COMPILE_LANGUAGE:CXX>:-std=c++14>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
 )
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+    target_compile_options(processor PRIVATE
+        $<$<COMPILE_LANGUAGE:CXX>:-std=c++11>
+    )
+endif()
 
 #
 # minidump_stackwalk
@@ -86,19 +90,23 @@ target_include_directories(minidump_stackwalk PRIVATE
 )
 
 target_compile_definitions(minidump_stackwalk PRIVATE
-	$<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS>
-	$<$<CXX_COMPILER_ID:MSVC>:_SCL_SECURE_NO_WARNINGS>
+	$<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS _SCL_SECURE_NO_WARNINGS>
 	BPLOG_MINIMUM_SEVERITY=SEVERITY_ERROR
 )
 
 target_compile_options(minidump_stackwalk PRIVATE
 	$<$<CXX_COMPILER_ID:MSVC>:/wd4800 /wd4146>
-    $<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CXX_COMPILER_ID:GNU>>:-std=c++11>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
 )
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+    target_compile_options(minidump_stackwalk PRIVATE
+        $<$<COMPILE_LANGUAGE:CXX>:-std=c++11>
+    )
+endif()
 
 target_link_libraries(minidump_stackwalk
 	processor
