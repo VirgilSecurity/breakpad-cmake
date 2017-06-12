@@ -185,9 +185,9 @@ add_library(common STATIC
 target_include_directories(common PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
     "C:/Program Files (x86)/Microsoft Visual Studio 14.0/DIA SDK/include"
-	"C:/Program Files (x86)/Microsoft Visual Studio 12.0/DIA SDK/include"
+    "C:/Program Files (x86)/Microsoft Visual Studio 12.0/DIA SDK/include"
     "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/atlmfc/include"
-	"C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/atlmfc/include"
+    "C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/atlmfc/include"
 )
 
 target_compile_definitions(common PUBLIC
@@ -273,7 +273,5 @@ target_link_libraries(common_unittests
 	common
 	gmock_main
 	gtest
+	#dl
 )
-
-#       'libraries': [
-#     -ldl
