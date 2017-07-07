@@ -15,7 +15,7 @@ endif()
 
 if(NOT EXISTS ${CMAKE_SOURCE_DIR}/src/testing)
 	execute_process(
-		COMMAND ${GIT_EXECUTABLE} clone --branch release-1.7.0
+		COMMAND ${GIT_EXECUTABLE} clone --branch release-1.7.0 --quiet
 			https://github.com/google/googlemock.git src/testing
 		
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
@@ -25,7 +25,7 @@ endif()
 
 if(NOT EXISTS ${CMAKE_SOURCE_DIR}/src/testing/gtest)
 	execute_process(
-		COMMAND ${GIT_EXECUTABLE} clone --branch release-1.7.0
+		COMMAND ${GIT_EXECUTABLE} clone --branch release-1.7.0 --quiet
 			https://github.com/google/googletest.git src/testing/gtest
 			
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
