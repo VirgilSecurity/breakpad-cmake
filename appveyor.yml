@@ -1,42 +1,37 @@
-version: '{build}'
+version: 1.0.{build}
+image:
+- Visual Studio 2013
+before_build:
+  - cmd: >-
+    call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86
+
+- Visual Studio 2015
+before_build:
+  - cmd: >-
+    call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+
+- Visual Studio 2017
+before_build:
+  - cmd: >-
+    call "C:\Program Files (x86)\Microsoft Visual Studio 15.0\VC\vcvarsall.bat" x86
 
 environment:
-  GYP_MSVS_VERSION: 2013
+  matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+      DIA_PATH: "C:/Program Files (x86)/Microsoft Visual Studio 12.0/DIA SDK/include"
+      ATL_PATH: "C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/atlmfc/include"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      DIA_PATH: "C:/Program Files (x86)/Microsoft Visual Studio 14.0/DIA SDK/include"
+      ATL_PATH: "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/atlmfc/include"
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      DIA_PATH: "C:/Program Files (x86)/Microsoft Visual Studio 15.0/DIA SDK/include"
+      ATL_PATH: "C:/Program Files (x86)/Microsoft Visual Studio 15.0/VC/atlmfc/include"
 
-platform:
-  - Win32
-
-configuration:
-  - Debug
-  - Release
-
-# Use the source dir expected by gclient.
-clone_folder: c:\projects\breakpad\src
-
-# Before checkout.
-init:
-  - cd %APPVEYOR_BUILD_FOLDER%\..\..
-  - appveyor DownloadFile https://storage.googleapis.com/chrome-infra/depot_tools.zip
-  - 7z -bd x depot_tools.zip -odepot_tools
-  - depot_tools\update_depot_tools
-  - cd %APPVEYOR_BUILD_FOLDER%
-
-# After checkout.
-install:
-  - PATH C:\projects\depot_tools;%PATH%
-  - cd %APPVEYOR_BUILD_FOLDER%\..
-  - gclient config https://%APPVEYOR_REPO_PROVIDER%.com/%APPVEYOR_REPO_NAME% --unmanaged --name=src
-  - gclient sync
+clone_folder: c:\breakpad
 
 build_script:
-  - cd %APPVEYOR_BUILD_FOLDER%
-  - msbuild src\client\windows\breakpad_client.sln /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /m /verbosity:normal
-  - msbuild src\tools\windows\tools_windows.sln    /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /m /verbosity:normal
-
-test_script:
-  - src\client\windows\%CONFIGURATION%\client_tests.exe
-  - src\tools\windows\%CONFIGURATION%\dump_syms_unittest.exe
-
-artifacts:
-  - path: '**\*.exe'
-  - path: '**\*.lib'
+- cmd: >-
+    mkdir build
+    cd build
+    cmake -DCMAKE_PREFIX_PATH="%DIA_PATH%;%ATL_PATH%" ../
+    cmake --build . --target ALL_BUILD --config RelWithDebInfo

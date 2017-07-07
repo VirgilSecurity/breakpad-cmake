@@ -182,12 +182,18 @@ add_library(common STATIC
     ${CommonSources}
 )
 
+set(DIA_SEARCH_DIR "$ENV{VSINSTALLDIR}")
+if (MSVC)
+	string(REGEX REPLACE "\\\\" "/" DIA_SEARCH_DIR ${DIA_SEARCH_DIR})
+endif()
+
+find_path(DIA_INCLUDE_DIR
+	NAMES dia2.h
+	HINTS "${DIA_SEARCH_DIR}DIA SDK/include")
+
 target_include_directories(common PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
-    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/DIA SDK/include"
-    "C:/Program Files (x86)/Microsoft Visual Studio 12.0/DIA SDK/include"
-    "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/atlmfc/include"
-    "C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/atlmfc/include"
+	$<$<CXX_COMPILER_ID:MSVC>:${DIA_INCLUDE_DIR}>
 )
 
 target_compile_definitions(common PUBLIC
