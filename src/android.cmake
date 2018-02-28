@@ -22,6 +22,8 @@ set(Sources
     common/linux/safe_readlink.cc
 )
 
+set_property(SOURCE common/android/breakpad_getcontext.S PROPERTY LANGUAGE ASM)
+
 add_library(breakpad_client STATIC
     ${Sources}
 )
