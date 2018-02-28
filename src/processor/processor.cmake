@@ -74,41 +74,43 @@ target_compile_features(processor PUBLIC
 #
 # minidump_stackwalk
 #
-set(MinidumSources
-	processor/minidump_stackwalk.cc
-)
-source_group("" FILES ${MinidumSources})
+if(NOT CMAKE_CROSSCOMPILING)
+    set(MinidumSources
+        processor/minidump_stackwalk.cc
+    )
+    source_group("" FILES ${MinidumSources})
 
-add_executable(minidump_stackwalk
-    ${MinidumSources}
-)
+    add_executable(minidump_stackwalk
+        ${MinidumSources}
+    )
 
-target_include_directories(minidump_stackwalk PRIVATE
-	${CMAKE_CURRENT_SOURCE_DIR}
-)
+    target_include_directories(minidump_stackwalk PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+    )
 
-target_compile_definitions(minidump_stackwalk PRIVATE
-	$<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS _SCL_SECURE_NO_WARNINGS>
-	BPLOG_MINIMUM_SEVERITY=SEVERITY_ERROR
-)
+    target_compile_definitions(minidump_stackwalk PRIVATE
+        $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS _SCL_SECURE_NO_WARNINGS>
+        BPLOG_MINIMUM_SEVERITY=SEVERITY_ERROR
+    )
 
-target_compile_options(minidump_stackwalk PRIVATE
-	$<$<CXX_COMPILER_ID:MSVC>:/wd4800 /wd4146>
-	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
-	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
-	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
-	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
-)
+    target_compile_options(minidump_stackwalk PRIVATE
+        $<$<CXX_COMPILER_ID:MSVC>:/wd4800 /wd4146>
+        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
+        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
+        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
+        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
+    )
 
-target_compile_features(minidump_stackwalk PUBLIC
-    cxx_std_11
-)
+    target_compile_features(minidump_stackwalk PUBLIC
+        cxx_std_11
+    )
 
-target_link_libraries(minidump_stackwalk
-	processor
-	disasm
-    common
-)
+    target_link_libraries(minidump_stackwalk
+        processor
+        disasm
+        common
+    )
+endif()
 
 #
 # processor_unittests
