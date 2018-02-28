@@ -1,23 +1,5 @@
 set(CommonSources)
 
-if(ANDROID)
-    list(APPEND CommonSources
-        common/android/breakpad_getcontext.S
-        common/android/include/elf.h
-        common/android/include/link.h
-        common/android/include/sgidefs.h
-        common/android/include/stab.h
-        common/android/include/sys/procfs.h
-        common/android/include/sys/signal.h
-        common/android/include/sys/user.h
-        common/android/include/ucontext.h
-        common/android/testing/include/wchar.h
-        common/android/testing/mkdtemp.h
-        common/android/testing/pthread_fixes.h
-        common/android/ucontext_constants.h
-    )
-endif()
-
 list(APPEND CommonSources
     common/basictypes.h
     common/byte_cursor.h
@@ -123,7 +105,6 @@ endif()
 list(APPEND CommonSources
     common/md5.cc
     common/md5.h
-    common/memory.h
     common/memory_range.h
     common/module.cc
     common/module.h
