@@ -75,4 +75,14 @@ if(NOT EXISTS ${CMAKE_SOURCE_DIR}/src/testing/gtest)
 	)
 endif()
 
+if(NOT EXISTS ${CMAKE_SOURCE_DIR}/src/third_party/lss)
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} clone --quiet
+            https://chromium.googlesource.com/linux-syscall-support src/third_party/lss
+            
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_QUIET
+    )
+endif()
+
 add_subdirectory(src)

@@ -100,11 +100,9 @@ target_compile_options(minidump_stackwalk PRIVATE
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
 )
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-    target_compile_options(minidump_stackwalk PRIVATE
-        $<$<COMPILE_LANGUAGE:CXX>:-std=c++11>
-    )
-endif()
+target_compile_features(minidump_stackwalk PUBLIC
+    cxx_std_11
+)
 
 target_link_libraries(minidump_stackwalk
 	processor

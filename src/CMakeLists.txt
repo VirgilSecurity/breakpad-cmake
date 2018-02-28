@@ -46,6 +46,10 @@ if(MSVC)
     include(tools/windows/tools_windows.cmake)
 endif()
 
+if(ANDROID)
+    include(android.cmake)
+endif()
+
 include(common/common.cmake)
 include(third_party/libdisasm/libdisasm.cmake)
 include(processor/processor.cmake)
