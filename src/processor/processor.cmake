@@ -67,11 +67,9 @@ target_compile_options(processor PRIVATE
 	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
 )
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-    target_compile_options(processor PRIVATE
-        $<$<COMPILE_LANGUAGE:CXX>:-std=c++11>
-    )
-endif()
+target_compile_features(processor PUBLIC
+    cxx_std_11
+)
 
 #
 # minidump_stackwalk
