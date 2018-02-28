@@ -183,82 +183,84 @@ target_compile_definitions(common PUBLIC
     $<$<PLATFORM_ID:Linux>:HAVE_A_OUT_H>
 )
 
-set(CommonTestsSources)
+if(NOT CMAKE_CROSSCOMPILING)
+    set(CommonTestsSources)
 
-if(ANDROID)
-	list(APPEND CommonTestsSources
-		common/android/breakpad_getcontext_unittest.cc
-	)
+    if(ANDROID)
+        list(APPEND CommonTestsSources
+            common/android/breakpad_getcontext_unittest.cc
+        )
+    endif()
+
+    list(APPEND CommonTestsSources
+        common/byte_cursor_unittest.cc
+    #     dwarf/bytereader_unittest.cc
+    #     dwarf/dwarf2diehandler_unittest.cc
+    #     dwarf/dwarf2reader_cfi_unittest.cc
+    #     dwarf/dwarf2reader_die_unittest.cc
+    #     dwarf_cfi_to_module_unittest.cc
+    #     dwarf_cu_to_module_unittest.cc
+    #     dwarf_line_to_module_unittest.cc
+    )
+
+    if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        list(APPEND CommonTestsSources
+            common/linux/dump_symbols_unittest.cc
+            common/linux/elf_core_dump_unittest.cc
+            common/linux/elf_symbols_to_module_unittest.cc
+            common/linux/file_id_unittest.cc
+            common/linux/google_crashdump_uploader_test.cc
+            common/linux/linux_libc_support_unittest.cc
+            common/linux/memory_mapped_file_unittest.cc
+            common/linux/safe_readlink_unittest.cc
+            common/linux/synth_elf_unittest.cc
+            common/linux/tests/auto_testfile.h
+            common/linux/tests/crash_generator.cc
+            common/linux/tests/crash_generator.h
+        )
+    endif()
+
+    if(APPLE)
+        list(APPEND CommonTestsSources
+            common/mac/macho_reader_unittest.cc
+        )
+    endif()
+
+    list(APPEND CommonTestsSources
+         common/memory_range_unittest.cc
+         #common/memory_unittest.cc FIXME: platform?
+         common/module_unittest.cc
+         common/simple_string_dictionary_unittest.cc
+         #common/stabs_reader_unittest.cc FIXME: platform?
+         #common/stabs_to_module_unittest.cc FIXME: platform?
+         common/test_assembler_unittest.cc
+         common/tests/auto_tempdir.h
+         #common/tests/file_utils.cc FIXME: platform?
+         common/tests/file_utils.h
+    )
+
+    if(MSVC)
+        list(APPEND CommonTestsSources
+            common/windows/omap_unittest.cc
+        )
+    endif()
+
+    add_executable(common_unittests
+        ${CommonTestsSources}
+    )
+
+    target_include_directories(common_unittests PRIVATE
+        ${CMAKE_SOURCE_DIR}/src
+    )
+
+    target_compile_definitions(common_unittests PUBLIC
+        $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS UNICODE>
+    )
+
+    target_link_libraries(common_unittests
+        common
+        gmock_main
+        gtest
+        #dl
+    )
 endif()
-
-list(APPEND CommonTestsSources
-	common/byte_cursor_unittest.cc
-#     dwarf/bytereader_unittest.cc
-#     dwarf/dwarf2diehandler_unittest.cc
-#     dwarf/dwarf2reader_cfi_unittest.cc
-#     dwarf/dwarf2reader_die_unittest.cc
-#     dwarf_cfi_to_module_unittest.cc
-#     dwarf_cu_to_module_unittest.cc
-#     dwarf_line_to_module_unittest.cc
-)
-
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-	list(APPEND CommonTestsSources
-		common/linux/dump_symbols_unittest.cc
-		common/linux/elf_core_dump_unittest.cc
-		common/linux/elf_symbols_to_module_unittest.cc
-		common/linux/file_id_unittest.cc
-		common/linux/google_crashdump_uploader_test.cc
-		common/linux/linux_libc_support_unittest.cc
-		common/linux/memory_mapped_file_unittest.cc
-		common/linux/safe_readlink_unittest.cc
-		common/linux/synth_elf_unittest.cc
-		common/linux/tests/auto_testfile.h
-		common/linux/tests/crash_generator.cc
-		common/linux/tests/crash_generator.h
-	)
-endif()
-
-if(APPLE)
-	list(APPEND CommonTestsSources
-		common/mac/macho_reader_unittest.cc
-	)
-endif()
-
-list(APPEND CommonTestsSources
-     common/memory_range_unittest.cc
-     #common/memory_unittest.cc FIXME: platform?
-     common/module_unittest.cc
-     common/simple_string_dictionary_unittest.cc
-     #common/stabs_reader_unittest.cc FIXME: platform?
-     #common/stabs_to_module_unittest.cc FIXME: platform?
-     common/test_assembler_unittest.cc
-     common/tests/auto_tempdir.h
-     #common/tests/file_utils.cc FIXME: platform?
-     common/tests/file_utils.h
-)
-
-if(MSVC)
-	list(APPEND CommonTestsSources
-		common/windows/omap_unittest.cc
-	)
-endif()
-
-add_executable(common_unittests
-	${CommonTestsSources}
-)
-
-target_include_directories(common_unittests PRIVATE
-	${CMAKE_SOURCE_DIR}/src
-)
-
-target_compile_definitions(common_unittests PUBLIC
-    $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS UNICODE>
-)
-
-target_link_libraries(common_unittests
-	common
-	gmock_main
-	gtest
-	#dl
-)
