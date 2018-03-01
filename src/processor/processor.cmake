@@ -74,7 +74,8 @@ target_compile_features(processor PUBLIC
 #
 # minidump_stackwalk
 #
-if(NOT CMAKE_CROSSCOMPILING)
+#if(NOT CMAKE_CROSSCOMPILING)
+if(FALSE)
     set(MinidumSources
         processor/minidump_stackwalk.cc
     )
