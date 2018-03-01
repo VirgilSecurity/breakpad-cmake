@@ -163,14 +163,13 @@ add_library(common STATIC
     ${CommonSources}
 )
 
-set(DIA_SEARCH_DIR "$ENV{VSINSTALLDIR}")
 if (MSVC)
-	string(REGEX REPLACE "\\\\" "/" DIA_SEARCH_DIR ${DIA_SEARCH_DIR})
+	string(REGEX REPLACE "\\\\" "/" DIA_SEARCH_DIR ${DIA_SDK})
 endif()
 
 find_path(DIA_INCLUDE_DIR
 	NAMES dia2.h
-	HINTS "${DIA_SEARCH_DIR}DIA SDK/include")
+	HINTS "${DIA_SDK}/include")
 
 target_include_directories(common PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
