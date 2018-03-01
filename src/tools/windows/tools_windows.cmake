@@ -28,7 +28,7 @@ target_compile_definitions(dump_syms PRIVATE
 
 find_library(DiaLibrary
 	NAMES diaguids
-	HINTS "C:/Program Files (x86)/Microsoft Visual Studio 12.0/DIA SDK/lib"
+	HINTS ${DIA_SDK}/lib
 )
 
 target_link_libraries(dump_syms
