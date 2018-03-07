@@ -182,6 +182,13 @@ target_compile_definitions(common PUBLIC
     $<$<PLATFORM_ID:Linux>:HAVE_A_OUT_H>
 )
 
+target_compile_options(common PUBLIC
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
+	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
+	$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
+)
+
 if(NOT CMAKE_CROSSCOMPILING)
     set(CommonTestsSources)
 

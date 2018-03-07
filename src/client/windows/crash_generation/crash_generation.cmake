@@ -20,6 +20,13 @@ target_compile_definitions(crash_generation_server PUBLIC
     $<$<CXX_COMPILER_ID:MSVC>:UNICODE>
 )
 
+target_compile_options(crash_generation_server PUBLIC
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
+)
+
 set(CrashGenerationClientSources
 	client/windows/crash_generation/crash_generation_client.h
 	client/windows/crash_generation/crash_generation_client.cc
@@ -38,4 +45,11 @@ target_include_directories(crash_generation_client PUBLIC
 
 target_compile_definitions(crash_generation_client PUBLIC
     $<$<CXX_COMPILER_ID:MSVC>:UNICODE>
+)
+
+target_compile_options(crash_generation_client PUBLIC
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
 )

@@ -20,6 +20,13 @@ target_compile_definitions(processor_bits PRIVATE
 	_CRT_SECURE_NO_WARNINGS
 )
 
+target_compile_options(processor_bits PUBLIC
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
+)
+
 add_executable(client_tests
     client/windows/unittests/exception_handler_test.h
     client/windows/unittests/exception_handler_test.cc
@@ -35,6 +42,13 @@ add_executable(client_tests
 
 target_compile_definitions(client_tests PRIVATE
 	$<$<CXX_COMPILER_ID:MSVC>:UNICODE>
+)
+
+target_compile_options(client_tests PUBLIC
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
 )
 
 target_link_libraries(client_tests
