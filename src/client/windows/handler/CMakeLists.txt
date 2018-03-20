@@ -1,6 +1,6 @@
 add_library(exception_handler STATIC
-    client/windows/handler/exception_handler.cc
-    client/windows/handler/exception_handler.h
+    exception_handler.cc
+    exception_handler.h
 )
 
 target_compile_options(exception_handler PUBLIC
@@ -11,5 +11,5 @@ target_compile_options(exception_handler PUBLIC
 )
 
 target_link_libraries(exception_handler
-	crash_generation_server
+    crash_generation_server
 )

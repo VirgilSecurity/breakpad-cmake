@@ -1,11 +1,11 @@
 set(CrashGenerationServerSources
-	client/windows/crash_generation/client_info.cc
-	client/windows/crash_generation/crash_generation_server.cc
-	client/windows/crash_generation/minidump_generator.cc
-	client/windows/crash_generation/client_info.h
-	client/windows/crash_generation/crash_generation_client.h
-	client/windows/crash_generation/crash_generation_server.h
-	client/windows/crash_generation/minidump_generator.h
+	client_info.cc
+	crash_generation_server.cc
+	minidump_generator.cc
+	client_info.h
+	crash_generation_client.h
+	crash_generation_server.h
+	minidump_generator.h
 )
 
 add_library(crash_generation_server STATIC
@@ -13,7 +13,7 @@ add_library(crash_generation_server STATIC
 )
 
 target_include_directories(crash_generation_server PUBLIC
-	${CMAKE_CURRENT_SOURCE_DIR}
+	${CMAKE_SOURCE_DIR}/src
 )
 
 target_compile_definitions(crash_generation_server PUBLIC
@@ -28,11 +28,9 @@ target_compile_options(crash_generation_server PUBLIC
 )
 
 set(CrashGenerationClientSources
-	client/windows/crash_generation/crash_generation_client.h
-	client/windows/crash_generation/crash_generation_client.cc
-	client/windows/crash_generation/crash_generation_server.h
-	
-	client/windows/crash_generation/crash_generation.cmake
+	crash_generation_client.h
+	crash_generation_client.cc
+	crash_generation_server.h
 )
 
 add_library(crash_generation_client STATIC
@@ -40,7 +38,7 @@ add_library(crash_generation_client STATIC
 )
 
 target_include_directories(crash_generation_client PUBLIC
-	${CMAKE_CURRENT_SOURCE_DIR}
+	${CMAKE_SOURCE_DIR}/src
 )
 
 target_compile_definitions(crash_generation_client PUBLIC

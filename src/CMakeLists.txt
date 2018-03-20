@@ -1,3 +1,6 @@
+#
+# GTest and GMock targets
+#
 add_library(gtest STATIC
     testing/gtest/src/gtest-all.cc
 )
@@ -64,20 +67,23 @@ target_link_libraries(gmock_main
     gmock
 )
 
+#
+# Breakpad targets
+#
 if(MSVC)
-    include(client/windows/crash_generation/crash_generation.cmake)
-    include(client/windows/handler/exception_handler.cmake)
-    include(client/windows/sender/crash_report_sender.cmake)
-    include(client/windows/tests/crash_generation_app/crash_generation_app.cmake)
-    include(client/windows/unittests/client_tests.cmake)
+    add_subdirectory(client/windows/crash_generation)
+    add_subdirectory(client/windows/handler)
+    add_subdirectory(client/windows/sender)
+    add_subdirectory(client/windows/tests/crash_generation_app)
+    add_subdirectory(client/windows/unittests)
 
-    include(tools/windows/tools_windows.cmake)
+    add_subdirectory(tools/windows)
 endif()
 
 if(ANDROID)
     include(android.cmake)
 endif()
 
-include(common/common.cmake)
-include(third_party/libdisasm/libdisasm.cmake)
-include(processor/processor.cmake)
+add_subdirectory(common)
+add_subdirectory(third_party/libdisasm)
+add_subdirectory(processor)
