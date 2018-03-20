@@ -53,20 +53,19 @@ target_include_directories(processor PUBLIC
 )
 
 target_compile_definitions(processor PRIVATE
-    $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS _SCL_SECURE_NO_WARNINGS>
     BPLOG_MINIMUM_SEVERITY=SEVERITY_ERROR
 )
 
 target_compile_options(processor PRIVATE
     $<$<CXX_COMPILER_ID:MSVC>:/wd4800 /wd4146>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
 )
 
 target_compile_features(processor PUBLIC
     cxx_std_11
+)
+
+target_link_libraries(processor
+    MSVC::static_runtime
 )
 
 #
@@ -88,16 +87,11 @@ if(FALSE)
     )
 
     target_compile_definitions(minidump_stackwalk PRIVATE
-        $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS _SCL_SECURE_NO_WARNINGS>
         BPLOG_MINIMUM_SEVERITY=SEVERITY_ERROR
     )
 
     target_compile_options(minidump_stackwalk PRIVATE
         $<$<CXX_COMPILER_ID:MSVC>:/wd4800 /wd4146>
-        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
-        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
-        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
-        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
     )
 
     target_compile_features(minidump_stackwalk PUBLIC
@@ -105,6 +99,7 @@ if(FALSE)
     )
 
     target_link_libraries(minidump_stackwalk
+        MSVC::static_runtime
         processor
         disasm
         common

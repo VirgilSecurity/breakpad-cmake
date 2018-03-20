@@ -25,15 +25,9 @@ target_include_directories(disasm PUBLIC
 )
 
 target_compile_definitions(disasm PRIVATE
-    $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS>
-    $<$<CXX_COMPILER_ID:MSVC>:_SCL_SECURE_NO_WARNINGS>
     BPLOG_MINIMUM_SEVERITY=SEVERITY_ERROR
 )
 
-target_compile_options(disasm PRIVATE
-    $<$<CXX_COMPILER_ID:MSVC>:/wd4800 /wd4146>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
+target_link_libraries(disasm
+    MSVC::static_runtime
 )

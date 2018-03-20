@@ -9,11 +9,8 @@ add_executable(crash_generation_app WIN32
     small.ico
 )
 
-target_compile_definitions(crash_generation_app PRIVATE
-    $<$<CXX_COMPILER_ID:MSVC>:UNICODE>
-)
-
 target_link_libraries(crash_generation_app
+    MSVC::static_runtime
     common
     crash_generation_server
     crash_generation_client

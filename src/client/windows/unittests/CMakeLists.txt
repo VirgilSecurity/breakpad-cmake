@@ -2,29 +2,22 @@
 # processor_bits
 #
 add_library(processor_bits STATIC
-	${CMAKE_SOURCE_DIR}/src/common/string_conversion.cc
-	${CMAKE_SOURCE_DIR}/src/processor/basic_code_modules.cc
-	${CMAKE_SOURCE_DIR}/src/processor/dump_context.cc
-	${CMAKE_SOURCE_DIR}/src/processor/dump_object.cc
-	${CMAKE_SOURCE_DIR}/src/processor/logging.cc
-	${CMAKE_SOURCE_DIR}/src/processor/minidump.cc
-	${CMAKE_SOURCE_DIR}/src/processor/pathname_stripper.cc
-	${CMAKE_SOURCE_DIR}/src/processor/proc_maps_linux.cc
+    ${CMAKE_SOURCE_DIR}/src/common/string_conversion.cc
+    ${CMAKE_SOURCE_DIR}/src/processor/basic_code_modules.cc
+    ${CMAKE_SOURCE_DIR}/src/processor/dump_context.cc
+    ${CMAKE_SOURCE_DIR}/src/processor/dump_object.cc
+    ${CMAKE_SOURCE_DIR}/src/processor/logging.cc
+    ${CMAKE_SOURCE_DIR}/src/processor/minidump.cc
+    ${CMAKE_SOURCE_DIR}/src/processor/pathname_stripper.cc
+    ${CMAKE_SOURCE_DIR}/src/processor/proc_maps_linux.cc
 )
 
 target_include_directories(processor_bits PRIVATE
-	${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/src
 )
 
-target_compile_definitions(processor_bits PRIVATE
-	_CRT_SECURE_NO_WARNINGS
-)
-
-target_compile_options(processor_bits PUBLIC
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
+target_link_libraries(processor_bits
+    MSVC::static_runtime
 )
 
 add_executable(client_tests
@@ -39,21 +32,11 @@ add_executable(client_tests
 )
 
 target_include_directories(client_tests PRIVATE
-	${CMAKE_SOURCE_DIR}/src
-)
-
-target_compile_definitions(client_tests PRIVATE
-    $<$<CXX_COMPILER_ID:MSVC>:UNICODE>
-)
-
-target_compile_options(client_tests PUBLIC
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
+    ${CMAKE_SOURCE_DIR}/src
 )
 
 target_link_libraries(client_tests
+    MSVC::static_runtime
     gmock_main
     common
     crash_generation_server

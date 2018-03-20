@@ -176,16 +176,12 @@ target_include_directories(common PUBLIC
 )
 
 target_compile_definitions(common PUBLIC
-    $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS UNICODE>
     $<$<PLATFORM_ID:Darwin>:HAVE_MACH_O_NLIST_H>
     $<$<PLATFORM_ID:Linux>:HAVE_A_OUT_H>
 )
 
-target_compile_options(common PUBLIC
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Debug>>:/MTd>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:/MT>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MinSizeRel>>:/MT>
-    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RelWithDebInfo>>:/MT>
+target_link_libraries(common
+    MSVC::static_runtime
 )
 
 if(NOT CMAKE_CROSSCOMPILING)
@@ -258,11 +254,8 @@ if(NOT CMAKE_CROSSCOMPILING)
         ${CMAKE_SOURCE_DIR}/src
     )
 
-    target_compile_definitions(common_unittests PUBLIC
-        $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS UNICODE>
-    )
-
     target_link_libraries(common_unittests
+        MSVC::static_runtime
         common
         gmock_main
         gtest
