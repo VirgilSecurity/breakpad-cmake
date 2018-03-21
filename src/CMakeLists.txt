@@ -18,6 +18,10 @@ set_property(TARGET MSVC::static_runtime PROPERTY
         $<$<CXX_COMPILER_ID:MSVC>:UNICODE>
 )
 
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    find_package(Threads REQUIRED)
+endif()
+
 #
 # GTest and GMock targets
 #
@@ -62,6 +66,16 @@ add_library(gmock_main STATIC
 target_link_libraries(gmock_main
     gmock
 )
+
+if(TARGET Threads::Threads)
+    target_link_libraries(gtest
+        Threads::Threads
+    )
+
+    target_link_libraries(gmock
+        Threads::Threads
+    )
+endif()
 
 #
 # Breakpad targets
