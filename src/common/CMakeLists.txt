@@ -5,37 +5,42 @@ list(APPEND CommonSources
     byte_cursor.h
     convert_UTF.c
     convert_UTF.h
-    dwarf/bytereader-inl.h
-    dwarf/bytereader.cc
-    dwarf/bytereader.h
-    # dwarf/cfi_assembler.cc
-    # dwarf/cfi_assembler.h
-    dwarf/dwarf2diehandler.cc
-    dwarf/dwarf2diehandler.h
-    # dwarf/dwarf2enums.h
-    dwarf/dwarf2reader.cc
-    dwarf/dwarf2reader.h
-    # dwarf/dwarf2reader_test_common.h
-    dwarf/elf_reader.cc
-    dwarf/elf_reader.h
-    # dwarf/functioninfo.cc
-    # dwarf/functioninfo.h
-    # dwarf/line_state_machine.h
-    # dwarf/types.h
-    dwarf_cfi_to_module.cc
-    dwarf_cfi_to_module.h
-    dwarf_cu_to_module.cc
-    dwarf_cu_to_module.h
-    dwarf_line_to_module.cc
-    dwarf_line_to_module.h
-    language.cc
-    language.h
-    path_helper.cc
-    path_helper.h
 )
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     list(APPEND CommonSources
+        dwarf/bytereader-inl.h
+        dwarf/bytereader.cc
+        dwarf/bytereader.h
+        # dwarf/cfi_assembler.cc
+        # dwarf/cfi_assembler.h
+        dwarf/dwarf2diehandler.cc
+        dwarf/dwarf2diehandler.h
+        # dwarf/dwarf2enums.h
+        dwarf/dwarf2reader.cc
+        dwarf/dwarf2reader.h
+        # dwarf/dwarf2reader_test_common.h
+        dwarf/elf_reader.cc
+        dwarf/elf_reader.h
+        # dwarf/functioninfo.cc
+        # dwarf/functioninfo.h
+        # dwarf/line_state_machine.h
+        # dwarf/types.h
+        dwarf_cfi_to_module.cc
+        dwarf_cfi_to_module.h
+        dwarf_cu_to_module.cc
+        dwarf_cu_to_module.h
+        dwarf_line_to_module.cc
+        dwarf_line_to_module.h
+        language.cc
+        language.h
+        path_helper.cc
+        path_helper.h
+        stabs_reader.cc
+        stabs_reader.h
+        stabs_to_module.cc
+        stabs_to_module.h
+
         linux/crc32.cc
         linux/crc32.h
         linux/dump_symbols.cc
@@ -128,10 +133,6 @@ if(Solaris)
 endif()
 
 list(APPEND CommonSources
-    stabs_reader.cc
-    stabs_reader.h
-    stabs_to_module.cc
-    stabs_to_module.h
     string_conversion.cc
     string_conversion.h
     symbol_data.h
@@ -220,6 +221,8 @@ if(NOT CMAKE_CROSSCOMPILING)
             linux/tests/auto_testfile.h
             linux/tests/crash_generator.cc
             linux/tests/crash_generator.h
+            tests/file_utils.cc
+            tests/file_utils.h
         )
     endif()
 
@@ -238,8 +241,6 @@ if(NOT CMAKE_CROSSCOMPILING)
          #stabs_to_module_unittest.cc FIXME: platform?
          test_assembler_unittest.cc
          tests/auto_tempdir.h
-         tests/file_utils.cc
-         tests/file_utils.h
     )
 
     if(MSVC)
