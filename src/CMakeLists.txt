@@ -94,6 +94,10 @@ if(ANDROID)
     include(android.cmake)
 endif()
 
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    add_subdirectory(client/linux)
+endif()
+
 add_subdirectory(common)
 add_subdirectory(third_party/libdisasm)
 add_subdirectory(processor)
